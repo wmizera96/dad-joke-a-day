@@ -18,11 +18,11 @@ namespace Functions
         }
 
 
-        [FunctionName("JokeFunctions")]
-        public async Task Run([TimerTrigger("*/5 * * * * *")]TimerInfo myTimer, ILogger log, CancellationToken cancellationToken)
+        [FunctionName("get-random-joke")]
+        public async Task GetRandomJokeAsync([TimerTrigger("*/5 * * * * *")]TimerInfo myTimer, ILogger log, CancellationToken cancellationToken)
         {
             var joke = await _jokeService.GetJokeAsync(cancellationToken);
-            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+            log.LogInformation(joke.ToString());
         }
     }
 }

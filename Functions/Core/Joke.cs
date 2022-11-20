@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Functions.Core
 {
-    public class Joke
+    public record Joke
     {
         [JsonProperty("_id")]
         public string Id { get; set; }

@@ -10,8 +10,6 @@ namespace Functions.Core
     {
         private readonly HttpClient _httpClient;
 
-        private static int Counter = 0;
-
         public JokeService(HttpClient httpClient)
         {
             _httpClient = httpClient;
