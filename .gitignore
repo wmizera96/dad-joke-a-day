@@ -1,0 +1,15 @@
+# build results
+Functions/obj/
+Functions/bin/
+
+# IDE settings
+.vs/
+
+
+# emulator settings
+__azurite*
+__blobstorage*
+
+
+# ignore local settings changes (avoid leaking API keys)
+Functions/local.settings.json
