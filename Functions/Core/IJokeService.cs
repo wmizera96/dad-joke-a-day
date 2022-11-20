@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Functions.Core
 {
-    internal interface IJokeService
+    public interface IJokeService
     {
         Task<Joke> GetJokeAsync(CancellationToken cancellationToken);
     }
