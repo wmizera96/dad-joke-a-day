@@ -1,10 +1,6 @@
-﻿using Functions.Infrastructure;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,21 +8,28 @@ namespace Functions.Core
 {
     public class JokeService : IJokeService
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly HttpClient _httpClient;
 
         private static int Counter = 0;
 
-        public JokeService(IHttpClientFactory httpClientFactory)
+        public JokeService(HttpClient httpClient)
         {
-            _httpClientFactory = httpClientFactory;
+            _httpClient = httpClient;
         }
 
-        public Task<Joke> GetJokeAsync(CancellationToken cancellationToken)
+        public async Task<Joke> GetJokeAsync(CancellationToken cancellationToken)
         {
-            using var client = this._httpClientFactory.CreateClient();
+            var responseMessage = await _httpClient.GetAsync("random/joke", cancellationToken);
 
-            // TODO implement
-            return Task.FromResult<Joke>(new Joke { Punchline = $"{Counter++} joke"});
+            if(responseMessage.IsSuccessStatusCode == false)
+            {
+                // TODO error handling
+                throw new Exception("invalid response");
+            }
+
+            var jokeResponse = await responseMessage.Content.ReadAsAsync<JokeResponse>();
+
+            return jokeResponse.Body.First();
         }
     }
 }

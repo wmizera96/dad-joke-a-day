@@ -19,15 +19,13 @@ namespace Functions
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddTransient<IJokeService, JokeService>();
-            
-
             builder.Services.AddOptions<RapidApiOptions>().Configure<IConfiguration>((options, configuration) =>
             {
                 configuration.GetSection(nameof(RapidApiOptions)).Bind(options);
             });
 
-            builder.Services.AddHttpClient<JokeService>((provider, client) =>
+
+            builder.Services.AddHttpClient<IJokeService, JokeService>((provider, client) =>
             {
                 var options = provider.GetService<IOptions<RapidApiOptions>>();
                 client.BaseAddress = new Uri(options.Value.Endpoint);
